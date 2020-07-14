@@ -18,7 +18,10 @@ ul{
   style : none;
   list-style: none;
 }
-
+.scrolled, .navbar-brand-white{
+  background-color: #20cb38;
+  color: white !important;
+}
 .container{
   padding: 0 15px;
   margin-left: 100px;

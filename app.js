@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -8,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 
-mongoose.connect("mongodb+srv://admin-josue:Test123@cluster0.usnm4.mongodb.net/soups?retryWrites=true&w=majority", {useNewUrlParser : true})
+mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD +"@cluster0.usnm4.mongodb.net/soups?retryWrites=true&w=majority", {useNewUrlParser : true})
 const soupSchema = mongoose.Schema({
   imgUrl : {
     type : String,
