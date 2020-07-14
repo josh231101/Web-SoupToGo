@@ -91,6 +91,17 @@ transform: translateY(-50%);
   padding: 4% 0;
   text-align: center;
 }
+.card{
+  border-radius: 1.2rem;
+}
+.card-img-top{
+  border-radius: 1.2rem;
+  height: 10vw;
+  object-fit: cover;
+}
+.card-body{
+  padding: 0.4rem 1.25rem;
+}
 .carousel-item{
   padding: 1% 15%;
 }
@@ -104,6 +115,10 @@ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.
 }
 .carousel-control-next-icon{
   background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnozj4RXyGf0Y_-YnoKMe3nUC-8PCGZxAgXg&usqp=CAU");
+}
+.icon-star{
+  color : yellow;
+  display: inline-block;
 }
 
 
@@ -138,4 +153,9 @@ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.
 }
 footer{
   padding: 3% 0;
+}
+.company-footer{
+  color: #20cb38;
+  font-weight: 600;
+  font-size: 1.8rem;
 }

@@ -21,22 +21,26 @@ const soupSchema = mongoose.Schema({
     min : 0,
     max : 5
   },
-  price : String
+  price : Number
 })
 
 const Soup = new mongoose.model("Soup",soupSchema);
 
+
+/*SOUP MODEL EXAMPLE
 const newSoup = new Soup({
   imgUrl : "https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2016/08/caldoderes.jpg",
   title : "Caldo de pollo",
-  stars : 4.5
+  stars : 4.5,
+  price : 70
 })
-
+newSoup.save();*/
 app.get("/",function(req,res){
-  Soup.find(function(err,foundsoups){
+  Soup.find({stars : { $gte : 4.4 }},function(err,foundsoups){
     if(!err){
+      var selectedSoups = foundsoups.slice(0,4);
       res.render("home",{
-        soups : foundsoups
+        soups : selectedSoups
       })
     }
     else{console.log(err);}
