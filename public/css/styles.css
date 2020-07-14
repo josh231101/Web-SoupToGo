@@ -43,7 +43,8 @@ ul{
 .main-img{
   -webkit-clip-path : polygon( 0 0, 100% 0, 100% 100%, 20% 100%);
   clip-path : polygon( 0 0, 100% 0, 100% 100%, 20% 100%);
-  background-image: url("https://img5.goodfon.com/wallpaper/nbig/2/25/limon-tarelka-khleb-sup-pomidory-tomaty-spetsii-sol-chechevi.jpg");
+  /* https://cncf.com.au/wp-content/uploads/2019/01/vegan.jpg */
+  background-image: url("https://cncf.com.au/wp-content/uploads/2019/01/vegan.jpg");
   background-position: center;
   height: 500px;
   width: inherit;
@@ -87,6 +88,21 @@ transform: translateY(-50%);
   padding: 4% 0;
   text-align: center;
 }
+.carousel-item{
+  padding: 1% 15%;
+}
+.carousel-control-prev-icon:after{
+  /* content: '<';
+font-size: 55px;
+color: red; */
+background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+
+  /* background-image: url("https://lh3.googleusercontent.com/proxy/70Fimto-OjzERPJ6jinX6-tix8AA9SgjJTPvrQ8qrBjtb1dJshJQ9-V6AobAEOwNVlJkGBbJN_yB376yEZ7p3SwiYZs4sC4"); */
+}
+.carousel-control-next-icon{
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnozj4RXyGf0Y_-YnoKMe3nUC-8PCGZxAgXg&usqp=CAU");
+}
+
 
 #download{
   position: relative;
