@@ -2,7 +2,7 @@
 
 <div style="padding: 0 30px;" class="container">
   <h1>Carrito de compras</h1>
-  <%soups.forEach(function(soup){%>
+  <%soups.forEach(function(soup,iterator){%>
     <div class="row cart-row">
       <div class="col-lg-2">
         <img class="cartImg" src="<%=soup.imgUrl%>" alt="">
@@ -15,12 +15,12 @@
       <div class="col-lg-3">
         <div class="vertical-center">
           <button class="btn btn-outline-success userSoupBtnMin " type="button" name="button"> - </button>
-          <strong class="userSoupQuantity">1</strong>
+          <strong class="userSoupQuantity <%= iterator %> ">1</strong>
           <button class="btn btn-outline-success userSoupBtnMax " type="button" name="button">+</button>
         </div>
       </div>
       <div class="col-lg-3">
-        <h4 style="float : right;text-align:right;display : inline-block;" class="vertical-center"><%=soup.price%></h4>
+        <h4 style="float : right;text-align:right;display : inline-block;" class="vertical-center <%= iterator %> soupPrice"> <%=soup.price%> </h4>
 
 
       </div>
