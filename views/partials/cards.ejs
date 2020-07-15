@@ -6,13 +6,16 @@
 
         <div class="col-md-3" style="float:left">
           <div class="card mb-2">
-            <img class="card-img-top"
+            <a class="card-text" href="/soups/<%= element.id %>">
+            <img  class="card-img-top" loading="lazy"
             src="<%= element.imgUrl%>" alt="Card image cap">
             <div class="card-body no-padding">
               <h4 class="card-title"><%= element.title %></h4>
               <i style="display:inline;float:left;text-align:left;margin-top:0.25rem;" class="icon-star fas fa-star"></i>
               <p style="display:inline;float:left;text-align:left;"><%=element.stars%> </p>
               <p style="float : right;text-align:right;">$ <%=element.price %></p>
+              </a>
+
             </div>
           </div>
         </div>
@@ -27,13 +30,16 @@
 
         <div class="col-md-3" style="float:left">
           <div class="card mb-2">
-            <img class="card-img-top"
+            <a class="card-text" href="/soups/<%= element.id %>">
+            <img class="card-img-top" loading="lazy"
             src="<%= element.imgUrl%>" alt="Card image cap">
             <div class="card-body">
               <h4 class="card-title"><%= element.title %></h4>
               <i style="display:inline;float:left;text-align:left;margin-top:0.25rem;" class="icon-star fas fa-star"></i>
               <p style="display:inline;float:left;text-align:left;"><%=element.stars%> </p>
               <p style="float : right;text-align:right;">$ <%=element.price %></p>
+              </a>
+
             </div>
           </div>
         </div>

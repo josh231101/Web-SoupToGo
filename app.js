@@ -23,9 +23,24 @@ const soupSchema = mongoose.Schema({
   },
   price : Number
 })
-
 const Soup = new mongoose.model("Soup",soupSchema);
-
+const userSchema =  mongoose.Schema({
+  name : String,
+  lastName : String,
+  address : String,
+  email : String,
+  password : String,
+  order : [soupSchema]
+})
+const User = new mongoose.model("User",userSchema);
+const newuser = new User({
+  name : "Josue",
+  lastName : "Arreola",
+  address : "Palma Real 243",
+  email : "wiijosue333@gmail.com",
+  password : "12345"
+})
+// newuser.save();
 
 /*SOUP MODEL EXAMPLE
 const newSoup = new Soup({
@@ -35,6 +50,18 @@ const newSoup = new Soup({
   price : 70
 })
 newSoup.save();*/
+
+
+/*Soup.find(function(e,foundSoups){
+  User.updateOne({email : "wiijosue333@gmail.com"},{$push : { order : foundSoups } },function(err,foundSoup){
+    if(!e){
+      console.log(foundSoup);
+    }else{
+      console.log(e);
+    }
+  })
+})*/
+
 app.get("/",function(req,res){
   Soup.find({stars : { $gte : 4.4 }},function(err,foundsoups){
     if(!err){
@@ -45,6 +72,100 @@ app.get("/",function(req,res){
     }
     else{console.log(err);}
   })
+})
+app.get("/signin",function(req,res){
+  res.render("login",{
+    id : ""
+  })
+})
+app.post("/signin", function(req,res){
+  const useremail = req.body.email;
+  const userpassword = req.body.password;
+  const soupId = req.body.id;
+  console.log(soupId);
+
+  User.findOne({email : useremail},function(e,foundUser){
+    if(!e){
+      if(foundUser){
+        if(foundUser.password === userpassword){
+          if(soupId != null ){
+            Soup.findOne({_id : soupId},function(e,foundSoup){
+              if(foundSoup){
+
+                User.updateOne( {_id: foundUser._id},{$push : {order : foundSoup }},function(e){
+                  if(!e){
+                    res.redirect("/" + foundUser._id + "/cart")
+                  }else{console.log(err);  }
+                })
+              }else{console.log(e);
+              }
+            })
+          }else{
+          res.redirect("/" + foundUser._id + "/cart")
+          }
+        }else{
+          console.log("Contraseña incorrecta");
+        }
+      }else{
+        res.redirect("/register")
+      }
+    }
+    else{e}
+  })
+})
+app.get("/register",function(req,res){
+  res.render("register");
+})
+app.post("/register",function(req,res){
+  const newUser = new User({
+    name : req.body.firstName,
+    lastName : req.body.lastName,
+    address : req.body.address,
+    email :  req.body.email,
+    password : req.body.password
+  })
+  newUser.save(function(e,createdUser){
+    if(!e){
+      res.redirect("/" + createdUser._id + "/cart")
+    }else{
+      console.log(e);
+    }
+  })
+})
+app.get("/:id/cart",function(req,res){
+  User.findOne({_id : req.params.id},function(e,foundUser){
+    if(!e){
+      if(foundUser){
+        res.render("cart",{
+          soups : foundUser.order
+        });
+      }else{
+
+      }
+    }
+  })
+
+});
+
+app.get("/soups/:id",function(req,res){
+  const soupID = req.params.id;
+  Soup.findOne({_id : soupID},function(e,foundSoup){
+    res.render("fooddetails",{
+      soup : foundSoup
+    });
+  })
+})
+app.post("/soups/:id",function(req,res){
+  const id = req.params.id;
+  res.render("login",{
+    id : id
+  })
+})
+
+
+app.get("/signin/:id",function(req,res){
+  const id = req.params.id;
+  res.render("signin")
 })
 
 app.listen(8080,function(){
