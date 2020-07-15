@@ -59,11 +59,12 @@ ul{
   border : solid 1px;
 }
 .main-img{
-  -webkit-clip-path : polygon( 0 0, 100% 0, 100% 100%, 20% 100%);
-  clip-path : polygon( 0 0, 100% 0, 100% 100%, 20% 100%);
+  -webkit-clip-path : polygon( 0 0, 100% 0, 100% 100%, 18% 100%);
+  clip-path : polygon( 0 0, 100% 0, 100% 100%, 18% 100%);
   /* https://cncf.com.au/wp-content/uploads/2019/01/vegan.jpg */
-  background-image: url("https://cncf.com.au/wp-content/uploads/2019/01/vegan.jpg");
+  background-image: url("https://img5.goodfon.com/wallpaper/nbig/2/25/limon-tarelka-khleb-sup-pomidory-tomaty-spetsii-sol-chechevi.jpg");
   background-position: center;
+  background-size: cover;
   height: 500px;
   width: inherit;
 }
