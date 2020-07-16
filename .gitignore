@@ -1,3 +1,6 @@
 /node_modules/
 /node_modules
 node_modules/
+npm-debug.lcq
+npm-debug.icq
+/*.env

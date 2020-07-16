@@ -213,12 +213,14 @@ app.post("/soups/:id", function(req, res) {
   })
 })
 
-
 app.get("/signin/:id", function(req, res) {
   const id = req.params.id;
   res.render("signin")
 })
-
-app.listen(8080, function() {
-  console.log("Page running on port 8080");
+let port = process.env.PORT
+if(port === null || port === ""){
+  port = 3000
+}
+app.listen(port, function() {
+  console.log("Web App running succesfully");
 })
