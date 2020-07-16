@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 //Create a session
-app.use(sesion({
+app.use(session({
   secret : "This is our little secret.",
   resave : false,
   saveUninitialized : false
@@ -217,8 +217,8 @@ app.get("/signin/:id", function(req, res) {
 })
 let port = process.env.PORT
 if(port === null || port === ""){
-  port = 3000
+  port = 8080
 }
-app.listen(port, function() {
+app.listen(8080, function() {
   console.log("Web App running succesfully");
 })
