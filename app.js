@@ -94,89 +94,27 @@ app.get("/signin", function(req, res) {
 app.post("/signin", function(req, res) {
   const soupId = req.body.id;
   console.log(soupId);
-  // const user = new User({
-  //   username : req.body.username,
-  //   password : req.body.password
-  // })
   User.findOne({username : req.body.username},function(e,user){
-    req.login(user,function(err){
-      if(err){
-        console.log(err);
-        res.redirect("/register");
-      }else{
-        passport.authenticate("local")(req,res,function(){
-          res.redirect("/");
-        })
-      }
-    })
+    if(user){
+      req.login(user,function(err){
+        if(err){
+          console.log(err);
+          res.redirect("/register");
+        }else{
+          passport.authenticate("local")(req,res,function(){
+            if(soupId === null || soupId === "" ){
+              res.redirect("/");
+            }else{
+              res.redirect("soups/" + soupId)
+            }
+          })
+        }
+      })
+    }else{
+      res.redirect("/register")
+    }
 
   })
-
-  // User.findOne({
-  //   username : useremail
-  // }, function(e, foundUser) {
-  //   if (!e) {
-  //     if (foundUser) {
-  //       if (foundUser.password === userpassword) {
-  //         if (soupId != null) {
-  //           /**/
-  //           /*MUST DELETE*/
-  //           Soup.findOne({
-  //             _id: soupId
-  //           }, function(e, foundSoup) {
-  //             if (foundSoup) {
-  //               console.log(foundUser.order);
-  //               console.log(foundUser.order.id);
-  //               //BEFORE UPDATING CHECK IF THE SOUP IS NOT IN THE CART!
-  //               let soupInTheCart = false
-  //               foundUser.order.forEach(function(soup, iterator) {
-  //                 if (foundSoup.title === soup.title  ) {
-  //                   //The soup the user wants is in his cart
-  //                   soupInTheCart = true;
-  //                 }
-  //               })
-  //               console.log(foundUser.order.length);
-  //
-  //               console.log(soupInTheCart)
-  //               if (soupInTheCart != true) {
-  //                 //Soup added to cart is not in the user cart
-  //
-  //                 User.updateOne({
-  //                   _id: foundUser._id
-  //                 }, {
-  //                   $push: {
-  //                     order: foundSoup
-  //                   }
-  //                 }, function(e) {
-  //                   if (!e) {
-  //                     console.log(foundUser.order);
-  //                     console.log(foundUser.order.id);
-  //                     res.redirect("/" + foundUser._id + "/cart")
-  //                   } else {
-  //                     console.log(err);
-  //                   }
-  //                 })
-  //               } else {
-  //                 //Soup Added to cart is actually in there
-  //                 res.redirect("/" + foundUser._id + "/cart")
-  //               }
-  //             } else {
-  //               console.log(e);
-  //             }
-  //           })
-  //         } else {
-  //           res.redirect("/" + foundUser._id + "/cart")
-  //         }
-  //       } else {
-  //         console.log("Contraseña incorrecta");
-  //       }
-  //     } else {
-  //       res.redirect("/register")
-  //     }
-  //   } else {
-  //
-  //   }
-  // })
 })
 
 app.get("/register", function(req, res) {
@@ -228,16 +166,40 @@ app.get("/soups/:id", function(req, res) {
   Soup.findOne({
     _id: soupID
   }, function(e, foundSoup) {
-    res.render("fooddetails", {
-      soup: foundSoup
-    });
+    if(req.isAuthenticated()){
+      res.render("fooddetails", {  soup: foundSoup, isAuthenticated : true });
+    }else{
+      res.render("fooddetails",{soup : foundSoup,isAuthenticated : false});
+    }
+
   })
 })
 app.post("/soups/:id", function(req, res) {
   const id = req.params.id;
-  res.render("login", {
-    id: id
-  })
+  if(req.isAuthenticated()){
+    Soup.findOne({_id : id },function(e,soupFound){
+      //Check if the soup is not in the cart
+      let soupInTheCart = false
+      req.user.order.forEach(function(soup, iterator) {
+      if (soupFound.title === soup.title  ) {
+              //The soup the user wants is in his cart
+              soupInTheCart = true;
+              }
+      })
+      if(soupInTheCart === false){
+        //The soup is not in the cart we add it
+        User.updateOne({_id : req.user._id},{$push : {order : soupFound}},function(e){
+          if(!e){res.redirect("/cart")}
+          else{console.log(e);}
+        })
+      }else{
+        //The soup is there, we just go to it
+        res.redirect("/cart")
+      }
+    })
+  }else{
+    res.render("login", {id:id, isAuthenticated : false})
+  }
 })
 
 app.get("/signin/:id", function(req, res) {
@@ -248,9 +210,11 @@ app.get("/logout",function(req,res){
   req.logout();
   res.redirect("/");
 })
+
 app.get("/cart",function(req,res){
-  res.render("cart",{soups : req.user.order ,isAuthenticated : true})
+  res.render("cart",{soups : req.user.order , isAuthenticated : true})
 })
+
 let port = process.env.PORT
 if(port === null || port === ""){
   port = 8080
