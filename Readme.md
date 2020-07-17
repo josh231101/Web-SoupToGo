@@ -22,7 +22,6 @@ I have to work on it because there are some problems with the cart. But the idea
 
 ## TODO:pencil:
 
-- :zap: Implement cookies and sessions.<br>
 - :zap: Implement OAuth 2.0.<br>
 - :zap: Fix quantity buttons in cart.<br>
 - :zap: Fix the cart UI in phones.<br>

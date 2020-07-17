@@ -49,24 +49,40 @@ ul{
   font-weight: 500;
   font-size: 1.2rem;
 }
-.navbar-light .navbar-nav .nav-link:hover{
+/* .navbar-light .navbar-nav .nav-link:hover{
   color: white;
-}
+} */
 .cart{
+  margin-left: 0.2rem;
   padding: 0 0.3rem;
-  border-color: white !important;
+  border-color: black ;
+  background-color: black;
   border-radius: 8px;
   border : solid 1px;
 }
 .cart:hover{
+  background-color: white;
+  border-color: white;
+  color : #20cb38 ;
+}
+.cart-title-white{
+  border-color: white;
+  background-color: white;
+  color: black;
+}
+.cart-title-white:hover{
+  border-color: black;
   background-color: black;
-  border-color: black !important;
-  color : white !important;
+}
+.cart-text-green{
+  color:  #20cb38 !important;
+}
+.cart-text-green:hover{
+  color:  white !important;
 }
 .main-img{
   -webkit-clip-path : polygon( 0 0, 100% 0, 100% 100%, 18% 100%);
   clip-path : polygon( 0 0, 100% 0, 100% 100%, 18% 100%);
-  /* https://cncf.com.au/wp-content/uploads/2019/01/vegan.jpg */
   background-image: url("https://img5.goodfon.com/wallpaper/nbig/2/25/limon-tarelka-khleb-sup-pomidory-tomaty-spetsii-sol-chechevi.jpg");
   background-position: center;
   background-size: cover;

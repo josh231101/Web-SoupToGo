@@ -3,6 +3,8 @@ $(function() {
   $(document).scroll(function() {
     $(".navbar").toggleClass('scrolled', $(this).scrollTop() > $(".navbar").height());
     $(".navbar-brand").toggleClass('navbar-brand-white', $(this).scrollTop() > $(".navbar").height());
+    $(".cart").toggleClass('cart-title-white', $(this).scrollTop() > $(".navbar").height());
+    $(".cart-title").toggleClass('cart-text-green', $(this).scrollTop() > $(".navbar").height());
   });
 });
 /*HANDLING PRODUCT Quantity*/
