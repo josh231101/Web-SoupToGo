@@ -55,10 +55,7 @@ ul{
 .cart{
   margin-left: 0.2rem;
   padding: 0 0.3rem;
-  border-color: black ;
-  background-color: black;
   border-radius: 8px;
-  border : solid 1px;
 }
 .cart:hover{
   background-color: white;
