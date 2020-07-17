@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 //Create a session
 app.use(session({
-  secret : "This is our little secret.",
+  secret : "Our little secret.",
   resave : false,
   saveUninitialized : false
 }))
@@ -47,20 +47,17 @@ const userSchema = mongoose.Schema({
   name: String,
   lastName: String,
   address: String,
-  email: String,
+  username: String,
   password: String,
   order: [soupSchema]
 })
 userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
+passport.use(User.createStrategy())
 
-//Creating the local strategy using User model
-passport.use(User.createStrategy());
-//serialize is creating the cookie
-passport.serializeUser(User.serializeUser());
-//deserializeUser is reading the cookie
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 app.get("/", function(req, res) {
   Soup.find({
@@ -70,9 +67,19 @@ app.get("/", function(req, res) {
   }, function(err, foundsoups) {
     if (!err) {
       var selectedSoups = foundsoups.slice(0, 4);
-      res.render("home", {
-        soups: selectedSoups
-      })
+      //Check if the user is authenticated
+      if(req.isAuthenticated()){
+        res.render("home", {
+          soups: selectedSoups,
+          isAuthenticated : true
+        })
+      }else{
+        res.render("home", {
+          soups: selectedSoups,
+          isAuthenticated : false
+        })
+
+      }
     } else {
       console.log(err);
     }
@@ -81,100 +88,122 @@ app.get("/", function(req, res) {
 
 
 app.get("/signin", function(req, res) {
-  res.render("login", {
-    id: ""
-  })
+  res.render("login", { id: "",isAuthenticated : false})
 })
+
 app.post("/signin", function(req, res) {
-  const useremail = req.body.email;
-  const userpassword = req.body.password;
   const soupId = req.body.id;
   console.log(soupId);
-
-  User.findOne({
-    email: useremail
-  }, function(e, foundUser) {
-    if (!e) {
-      if (foundUser) {
-        if (foundUser.password === userpassword) {
-          if (soupId != null) {
-            /**/
-            /*MUST DELETE*/
-            Soup.findOne({
-              _id: soupId
-            }, function(e, foundSoup) {
-              if (foundSoup) {
-                console.log(foundUser.order);
-                console.log(foundUser.order.id);
-                //BEFORE UPDATING CHECK IF THE SOUP IS NOT IN THE CART!
-                let soupInTheCart = false
-                foundUser.order.forEach(function(soup, iterator) {
-                  if (foundSoup.title === soup.title  ) {
-                    //The soup the user wants is in his cart
-                    soupInTheCart = true;
-                  }
-                })
-                console.log(foundUser.order.length);
-
-                console.log(soupInTheCart)
-                if (soupInTheCart != true) {
-                  //Soup added to cart is not in the user cart
-
-                  User.updateOne({
-                    _id: foundUser._id
-                  }, {
-                    $push: {
-                      order: foundSoup
-                    }
-                  }, function(e) {
-                    if (!e) {
-                      console.log(foundUser.order);
-                      console.log(foundUser.order.id);
-                      res.redirect("/" + foundUser._id + "/cart")
-                    } else {
-                      console.log(err);
-                    }
-                  })
-                } else {
-                  //Soup Added to cart is actually in there
-                  res.redirect("/" + foundUser._id + "/cart")
-                }
-              } else {
-                console.log(e);
-              }
-            })
-          } else {
-            res.redirect("/" + foundUser._id + "/cart")
-          }
-        } else {
-          console.log("Contraseña incorrecta");
-        }
-      } else {
-        res.redirect("/register")
+  // const user = new User({
+  //   username : req.body.username,
+  //   password : req.body.password
+  // })
+  User.findOne({username : req.body.username},function(e,user){
+    req.login(user,function(err){
+      if(err){
+        console.log(err);
+        res.redirect("/register");
+      }else{
+        passport.authenticate("local")(req,res,function(){
+          res.redirect("/");
+        })
       }
-    } else {
+    })
 
-    }
   })
+
+  // User.findOne({
+  //   username : useremail
+  // }, function(e, foundUser) {
+  //   if (!e) {
+  //     if (foundUser) {
+  //       if (foundUser.password === userpassword) {
+  //         if (soupId != null) {
+  //           /**/
+  //           /*MUST DELETE*/
+  //           Soup.findOne({
+  //             _id: soupId
+  //           }, function(e, foundSoup) {
+  //             if (foundSoup) {
+  //               console.log(foundUser.order);
+  //               console.log(foundUser.order.id);
+  //               //BEFORE UPDATING CHECK IF THE SOUP IS NOT IN THE CART!
+  //               let soupInTheCart = false
+  //               foundUser.order.forEach(function(soup, iterator) {
+  //                 if (foundSoup.title === soup.title  ) {
+  //                   //The soup the user wants is in his cart
+  //                   soupInTheCart = true;
+  //                 }
+  //               })
+  //               console.log(foundUser.order.length);
+  //
+  //               console.log(soupInTheCart)
+  //               if (soupInTheCart != true) {
+  //                 //Soup added to cart is not in the user cart
+  //
+  //                 User.updateOne({
+  //                   _id: foundUser._id
+  //                 }, {
+  //                   $push: {
+  //                     order: foundSoup
+  //                   }
+  //                 }, function(e) {
+  //                   if (!e) {
+  //                     console.log(foundUser.order);
+  //                     console.log(foundUser.order.id);
+  //                     res.redirect("/" + foundUser._id + "/cart")
+  //                   } else {
+  //                     console.log(err);
+  //                   }
+  //                 })
+  //               } else {
+  //                 //Soup Added to cart is actually in there
+  //                 res.redirect("/" + foundUser._id + "/cart")
+  //               }
+  //             } else {
+  //               console.log(e);
+  //             }
+  //           })
+  //         } else {
+  //           res.redirect("/" + foundUser._id + "/cart")
+  //         }
+  //       } else {
+  //         console.log("Contraseña incorrecta");
+  //       }
+  //     } else {
+  //       res.redirect("/register")
+  //     }
+  //   } else {
+  //
+  //   }
+  // })
 })
 
 app.get("/register", function(req, res) {
-  res.render("register");
+  res.render("register",{isAuthenticated : false});
 })
 app.post("/register", function(req, res) {
-  const newUser = new User({
-    name: req.body.firstName,
-    lastName: req.body.lastName,
-    address: req.body.address,
-    email: req.body.email,
-    password: req.body.password
-  })
-  newUser.save(function(e, createdUser) {
-    if (!e) {
-      res.redirect("/" + createdUser._id + "/cart")
-    } else {
-      console.log(e);
-    }
+
+  User.findOne({username : req.body.username},function(err,foundUser){
+    console.log(foundUser + " 1 ")
+    if(!err){
+      if(foundUser){
+        //There is an user and he has to use another account
+        //**TODO:** SEND AND ALERT TO THE USER
+        res.redirect("/register");
+      }else{
+        User.register({username : req.body.username, name : req.body.firstName,lastName : req.body.lastName, address : req.body.address}, req.body.password , function(err,user){
+          if(err){console.log(err); res.redirect("/register")}
+          else{
+            //A new user was saved
+            console.log(user);
+            passport.authenticate("local")(req,res,function(){
+              res.redirect("/")
+            })
+          }
+        })
+      }
+    }else{console.log(err);}
   })
 })
 app.get("/:id/cart", function(req, res) {
@@ -214,6 +243,13 @@ app.post("/soups/:id", function(req, res) {
 app.get("/signin/:id", function(req, res) {
   const id = req.params.id;
   res.render("signin")
+})
+app.get("/logout",function(req,res){
+  req.logout();
+  res.redirect("/");
+})
+app.get("/cart",function(req,res){
+  res.render("cart",{soups : req.user.order ,isAuthenticated : true})
 })
 let port = process.env.PORT
 if(port === null || port === ""){
