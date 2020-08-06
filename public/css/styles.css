@@ -30,13 +30,18 @@ ul{
 }
 .container{
   padding: 0 15px;
-  margin-left: 100px;
-  margin-right: 100px;
+}
+
+@media (min-width : 0px){
+  .container{
+    max-width: 100%
+  }
 }
 .navbar-brand{
   font-size: 1.6rem;
   color:   #20cb38;
   font-weight: bold;
+  padding: 1rem 6%;
 }
 .navbar-light .navbar-brand{
   font-size: 1.6rem;
@@ -91,10 +96,12 @@ ul{
   margin: 0;
 }
 .vertical-center{
-position: absolute;
-top: 50%;
--ms-transform: translateY(-50%);
-transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 6%;
 }
 .btn-getstarted{
   margin: 1.5rem 0;
