@@ -3,37 +3,42 @@
 <div style="padding: 0 30px;" class="container">
   <h1>Carrito de compras</h1>
   <%soups.forEach(function(soup,iterator){%>
-    <div class="row cart-row">
-      <div class="col-lg-2">
-        <img class="cartImg" src="<%=soup.imgUrl%>" alt="">
+    <!--FLEXBOX EXPERIMENT-->
+    <div class="cart__wrapper">
+        <div class="row">
+          <div class="col-sm-2">
+            <img class="cart__Image" src="<%=soup.imgUrl%>" alt="">
 
-      </div>
-      <div class="col-lg-4">
-        <h3 class="vertical-center"><%= soup.title%></h3>
+          </div>
+          <div class="col-sm-4">
+            <h3 class="vertical-center"><%= soup.title%></h3>
 
-      </div>
-      <div class="col-lg-3">
-        <div class="vertical-center">
-          <button class="btn btn-outline-success userSoupBtnMin " type="button" name="button"> - </button>
-          <strong class="userSoupQuantity <%= iterator %> ">1</strong>
-          <button class="btn btn-outline-success userSoupBtnMax " type="button" name="button">+</button>
+          </div>
+          <div class="col-sm-3">
+            <div class="cart__quantity">
+              <button class="btn btn-outline-success userSoupBtnMin " type="button" name="button"> - </button>
+              <strong class="userSoupQuantity <%= iterator %> ">1</strong>
+              <button class="btn btn-outline-success userSoupBtnMax " type="button" name="button">+</button>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <h4 class="cart__price <%= iterator %> soupPrice"> <%=soup.price%> </h4>
+
+
+          </div>
+
         </div>
-      </div>
-      <div class="col-lg-3">
-        <h4 style="float : right;text-align:right;display : inline-block;" class="vertical-center <%= iterator %> soupPrice"> <%=soup.price%> </h4>
-
-
-      </div>
     </div>
   <%})%>
-  <hr>
+
   <%var total = 0;%>
   <%soups.forEach(function(element){%>
     <%total+= element.price%>
   <%})%>
-  <h3 style="text-align : right;">Total : <%=total %></h3>
+  <div class="cart__finalPrice">
+    <hr>
+    <h3 style="text-align : right;">Total : <%=total %></h3>
     <button style="float:right;" class=" btn btn-lg btn-outline-success userSoupAddToCart" type="button" name="button">Order!</button>
-
-
+  </div>
 </div>
 <%- include("partials/footer") -%>
