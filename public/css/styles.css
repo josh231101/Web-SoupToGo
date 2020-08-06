@@ -24,6 +24,18 @@ ul{
   style : none;
   list-style: none;
 }
+.navbar__container{
+  max-width: 100%;
+  padding: 1rem 6%
+}
+@media (max-width : 1000px){
+  .collapse.show {
+    display: block;
+    background-color: #20cb38;
+    padding: 0 6%;
+    border-radius: 8px;
+  }
+}
 .scrolled, .navbar-brand-white{
   background-color: #20cb38;
   color: white !important;
