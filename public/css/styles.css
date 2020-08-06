@@ -337,3 +337,6 @@ footer{
 .cart__finalPrice{
   padding: 1rem 6%;
 }
+.finalPrice {
+  text-align: end;
+}

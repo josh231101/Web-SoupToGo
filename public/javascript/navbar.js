@@ -9,71 +9,29 @@ $(function() {
 });
 /*HANDLING PRODUCT Quantity*/
 
-$(".userSoupBtnMin").on("click", function() {
-  switch ($("strong")){
-    case $("strong").hasClass("0"):
-      updateQuantityNumberSubsctract(parseInt($(".0").text()), "0")
+$(".userSoupBtnMax").click((event)=>{
+  const position = Number(event.target.value)
+  $(`.${position}`).text(Number(Number($(`.${position}`).text()) + 1))
+  var currentPrice = (Number($(`.${position}`).text()) * Number($(`.soupPrice${position}`).attr("name")))
+  $(`.soupPrice${position}`).text(currentPrice)
 
-      break;
-    case $("strong").hasClass("1"):
-      updateQuantityNumberSubsctract(parseInt($(".1").text()), "1")
 
-      break;
-    case $("strong").hasClass("2"):
-      updateQuantityNumberSubsctract(parseInt($(".2").text()), "2")
-
-      break;
-    case $("strong").hasClass("3"):
-      updateQuantityNumberSubsctract(parseInt($(".3").text()), "3")
-
-      break;
-    case $("strong").hasClass("4"):
-      updateQuantityNumberSubsctract(parseInt($(".4").text()), "4")
-
-      break;
-    default:
+  const arrayLength = Number($(".finalPrice").attr("name"))
+  var finalPrice = 0
+  for(var i = 0 ; i < arrayLength ; i++){
+    finalPrice += (Number($(`.${i}`).text()) * Number($(`.soupPrice${i}`).attr("name")))
   }
-});
-
-function updateQuantityNumberSubsctract(currentQuantity, soupPosition) {
-  if (currentQuantity > 1) {
-    currentQuantity--;
-    $(("." + soupPosition)).text(currentQuantity);
-  } else {}
-}
-function updateQuantityNumberAdd(currentQuantity,soupPosition){
-  currentQuantity++;
-  $(("." + soupPosition)).text(currentQuantity);
-}
-
-$(".userSoupBtnMax").on("click", function() {
-  switch ($("strong")) {
-    case $("strong").hasClass("0"):
-      console.log("HOLA MUNDO")
-      updateQuantityNumberAdd(parseInt($(".1").text()), "0")
-
-      break;
-    case $("strong").hasClass("1"):
-    console.log("HOLA MUNDO2")
-      updateQuantityNumberAdd(parseInt($(".1").text()), "1")
-
-      break;
-    case $("strong").hasClass("2"):
-    console.log("HOLA MUNDO3")
-      updateQuantityNumberAdd(parseInt($(".2").text()), "2")
-
-      break;
-    case $("strong").hasClass("3"):
-    console.log("HOLA MUNDO4")
-      updateQuantityNumberAdd(parseInt($(".3").text()), "3")
-
-      break;
-    case $("strong").hasClass("4"):
-    console.log("HOLA MUNDO5")
-      updateQuantityNumberAdd(parseInt($(".4").text()), "4")
-
-      break;
-    default:
+  $(".finalPrice").text(finalPrice)
+})
+$(".userSoupBtnMin").click((event)=>{
+  const position = Number(event.target.value)
+  $(`.${position}`).text(Number(Number($(`.${position}`).text()) - 1))
+  var currentPrice = (Number($(`.${position}`).text()) * Number($(`.soupPrice${position}`).attr("name")))
+  $(`.soupPrice${position}`).text(currentPrice)
+  const arrayLength = Number($(".finalPrice").attr("name"))
+  var finalPrice = 0
+  for(var i = 0 ; i < arrayLength ; i++){
+    finalPrice += (Number($(`.${i}`).text()) * Number($(`.soupPrice${i}`).attr("name")))
   }
-
-});
+  $(".finalPrice").text(finalPrice)
+})

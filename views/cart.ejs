@@ -1,7 +1,7 @@
 <%- include("partials/header") -%>
 
-<div style="padding: 0 30px;" class="container">
-  <h1>Carrito de compras</h1>
+<div  class="container">
+  <h1 style="padding : 0 6%">Carrito de compras</h1>
   <%soups.forEach(function(soup,iterator){%>
     <!--FLEXBOX EXPERIMENT-->
     <div class="cart__wrapper">
@@ -16,13 +16,13 @@
           </div>
           <div class="col-sm-3">
             <div class="cart__quantity">
-              <button class="btn btn-outline-success userSoupBtnMin " type="button" name="button"> - </button>
-              <strong class="userSoupQuantity <%= iterator %> ">1</strong>
-              <button class="btn btn-outline-success userSoupBtnMax " type="button" name="button">+</button>
+              <button  class="btn btn-outline-success userSoupBtnMin " type="button" value="<%= iterator %>" name="btnSubsctract"> - </button>
+              <strong class="userSoupQuantity <%= iterator %> ">0</strong>
+              <button  class="btn btn-outline-success userSoupBtnMax " type="button" value="<%= iterator %>" name="btnIncrease">+</button>
             </div>
           </div>
           <div class="col-lg-3">
-            <h4 class="cart__price <%= iterator %> soupPrice"> <%=soup.price%> </h4>
+            <h4 class="cart__price  soupPrice<%= iterator%>" name="<%= soup.price %>"> 0 </h4>
 
 
           </div>
@@ -31,13 +31,13 @@
     </div>
   <%})%>
 
-  <%var total = 0;%>
+  <!--<%var total = 0;%>
   <%soups.forEach(function(element){%>
     <%total+= element.price%>
-  <%})%>
+  <%})%>-->
   <div class="cart__finalPrice">
     <hr>
-    <h3 style="text-align : right;">Total : <%=total %></h3>
+    <h3 class="finalPrice" tyle="text-align : right;" name="<%=soups.length%>">Total : 0</h3>
     <button style="float:right;" class=" btn btn-lg btn-outline-success userSoupAddToCart" type="button" name="button">Order!</button>
   </div>
 </div>
