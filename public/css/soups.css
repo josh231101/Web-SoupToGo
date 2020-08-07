@@ -1,0 +1,18 @@
+.soups__wrapper{
+  padding: 2% 6%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.soup__wrapper{
+  display: flex;
+  flex-direction: column;
+  margin: 2%;
+  width: 50vh;
+  height: 100%;
+}
+@media (max-width : 1000px){
+  .soup__wrapper{
+    width: 40%;
+  }
+}

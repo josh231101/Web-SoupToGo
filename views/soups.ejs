@@ -1,0 +1,21 @@
+<%- include("partials/header") -%>
+
+<div class="soups__wrapper">
+
+<% soups.forEach((soup,i) => {%>
+    <div class="soup__wrapper">
+      <div class="card mb-2">
+        <a class="card-text" href="/soups/<%= soup.id %>">
+          <img  class="card-img-top" loading="lazy" src="<%= soup.imgUrl%>" alt="Card image cap">
+          <div class="card-body no-padding">
+            <h4 class="card-title"><%= soup.title %></h4>
+            <i style="display:inline;float:left;text-align:left;margin-top:0.25rem;" class="icon-star fas fa-star"></i>
+            <p style="display:inline;float:left;text-align:left;"><%=soup.stars%> </p>
+            <p style="float : right;text-align:right;">$ <%=soup.price %></p>
+          </div>
+        </a>
+      </div>
+    </div>
+<%})%>
+</div>
+<%- include("partials/footer") -%>

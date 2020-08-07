@@ -42,6 +42,13 @@ const soupSchema = mongoose.Schema({
   price: Number
 })
 const Soup = new mongoose.model("Soup", soupSchema);
+const newSoup = new Soup({
+  imgUrl : "https://www.superama.com.mx/views/micrositio/recetas/images/masbuscadas/chilesrellenos/Web_fotoreceta.jpg",
+  title : "Chiles rellenos",
+  stars : 4.4,
+  price : 60
+})
+newSoup.save()
 
 const userSchema = mongoose.Schema({
   name: String,
@@ -86,6 +93,21 @@ app.get("/", function(req, res) {
   })
 })
 
+app.get("/soups",function(req,res){
+  Soup.find(function(err,soups){
+    if(req.isAuthenticated()){
+      res.render("soups",{
+        soups : soups,
+        isAuthenticated : true
+      })
+    }else{
+      res.render("soups",{
+        soups : soups,
+        isAuthenticated : false
+      })
+    }
+  })
+})
 
 app.get("/signin", function(req, res) {
   res.render("login", { id: "",isAuthenticated : false})
@@ -219,6 +241,6 @@ let port = process.env.PORT
 if(port === null || port === ""){
   port = 3000
 }
-app.listen(port, function() {
+app.listen(8080, function() {
   console.log("Web App running succesfully");
 })
