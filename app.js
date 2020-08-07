@@ -42,13 +42,7 @@ const soupSchema = mongoose.Schema({
   price: Number
 })
 const Soup = new mongoose.model("Soup", soupSchema);
-const newSoup = new Soup({
-  imgUrl : "https://www.superama.com.mx/views/micrositio/recetas/images/masbuscadas/chilesrellenos/Web_fotoreceta.jpg",
-  title : "Chiles rellenos",
-  stars : 4.4,
-  price : 60
-})
-newSoup.save()
+
 
 const userSchema = mongoose.Schema({
   name: String,
@@ -241,6 +235,6 @@ let port = process.env.PORT
 if(port === null || port === ""){
   port = 3000
 }
-app.listen(8080, function() {
+app.listen(port, function() {
   console.log("Web App running succesfully");
 })
