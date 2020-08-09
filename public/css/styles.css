@@ -124,7 +124,21 @@ ul{
   border: none;
   background-color: #20cb38;
   color: white;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: transform 400ms;
 }
+.btn-getstarted:hover{
+  transform:  translate3d(20px,0px,0);
+    /* Just change the width and height to 140% and have them transition
+       I used translate3d to position the card the same way scale() does */
+}
+.btn-getstarted:focus{
+  outline: none;
+  border:none;
+}
+
 #features{
   background-color: #20cb38;
 }

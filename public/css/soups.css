@@ -3,6 +3,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
+}
+.soup__wrapper:hover{
+   transform: scale(1.05);
 }
 .soup__wrapper{
   display: flex;
@@ -10,6 +14,10 @@
   margin: 2%;
   width: 50vh;
   height: 100%;
+  transition: all 400ms
+}
+.card-text:hover{
+  text-decoration: none;
 }
 @media (max-width : 1000px){
   .soup__wrapper{

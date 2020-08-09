@@ -235,6 +235,6 @@ let port = process.env.PORT
 if(port === null || port === ""){
   port = 3000
 }
-app.listen(port, function() {
+app.listen(8080, function() {
   console.log("Web App running succesfully");
 })
