@@ -3,4 +3,6 @@
 node_modules/
 npm-debug.lcq
 npm-debug.icq
-/*.env
+.env
+/.env
+./.env
